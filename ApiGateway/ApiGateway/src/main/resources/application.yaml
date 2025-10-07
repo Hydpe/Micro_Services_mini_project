@@ -1,0 +1,25 @@
+server:
+  port: 9093
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: Quiz-Service
+              uri: lb://Quiz-Service
+              predicates:
+                - Path=/quiz/**,/quiz-test/**
+            - id: QUESTION-SERVICE
+              uri: lb://QUESTION-SERVICE
+              predicates:
+                - Path=/questions/**
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
